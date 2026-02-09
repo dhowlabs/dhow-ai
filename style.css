@@ -17,7 +17,7 @@
   --accent-light: #EEF2FF;
 }
 
-html {
+html, body {
   height: 100%;
 }
 
@@ -27,13 +27,12 @@ body {
   background: var(--bg-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 main {
-  flex: 1;
+  flex: 1 0 auto;
 }
 
 .container {
@@ -65,7 +64,7 @@ main {
 
 /* Hero / Header */
 .hero {
-  padding: 72px 0 56px;
+  padding: 48px 0 40px;
   text-align: center;
 }
 
@@ -101,7 +100,7 @@ main {
 
 /* Features */
 .features {
-  padding: 72px 0;
+  padding: 40px 0;
 }
 
 .feature-grid {
@@ -111,7 +110,7 @@ main {
 }
 
 .feature-card {
-  padding: 32px 28px;
+  padding: 24px 24px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg-white);
@@ -141,7 +140,7 @@ main {
 
 /* Contact */
 .contact {
-  padding: 56px 0;
+  padding: 32px 0;
   text-align: center;
 }
 
