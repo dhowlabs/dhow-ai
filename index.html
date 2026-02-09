@@ -25,6 +25,12 @@
   </header>
 
   <main>
+    <section class="about">
+      <div class="container">
+        <p>Dhow Labs builds agent infrastructure for businesses navigating blockchain, voice communication, and real-time coordination. Based in the United States, we develop production-grade tooling that lets autonomous AI agents operate reliably across on-chain and off-chain environments.</p>
+      </div>
+    </section>
+
     <section class="features">
       <div class="container">
         <div class="feature-grid">
@@ -72,6 +78,13 @@
         </div>
       </div>
     </section>
+
+    <section class="contact">
+      <div class="container">
+        <h2>Get in Touch</h2>
+        <p>Interested in working with us? Reach out at <a href="mailto:hello@dhow.ai">hello@dhow.ai</a></p>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -84,6 +97,11 @@
       <div class="wave wave-3"></div>
     </div>
     <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="mailto:hello@dhow.ai">Contact</a>
+      </div>
       <p>Dhow Labs, LLC &copy; 2026</p>
     </div>
   </footer>
@@ -96,26 +114,27 @@
     (function() {
       const btn = document.getElementById('soundToggle');
       const icon = document.getElementById('soundIcon');
-      let audio = null;
+      let ctx = null;
+      let masterGain = null;
       let playing = false;
 
-      // Generate ocean sound with Web Audio API
-      function createOceanSound() {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const gain = ctx.createGain();
-        gain.gain.value = 0;
-        gain.connect(ctx.destination);
+      function initAudio() {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-        // Brown noise filtered to sound like ocean
+        // Master gain — starts at 0 (silent)
+        masterGain = ctx.createGain();
+        masterGain.gain.value = 0;
+        masterGain.connect(ctx.destination);
+
+        // Brown noise buffer
         const bufferSize = 2 * ctx.sampleRate;
         const buffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
-
-        for (let channel = 0; channel < 2; channel++) {
-          const data = buffer.getChannelData(channel);
+        for (let ch = 0; ch < 2; ch++) {
+          const data = buffer.getChannelData(ch);
           let last = 0;
           for (let i = 0; i < bufferSize; i++) {
             const white = Math.random() * 2 - 1;
-            data[i] = (last + (0.02 * white)) / 1.02;
+            data[i] = (last + 0.02 * white) / 1.02;
             last = data[i];
             data[i] *= 3.5;
           }
@@ -125,44 +144,31 @@
         source.buffer = buffer;
         source.loop = true;
 
-        // Low-pass filter for soft ocean feel
+        // Low-pass for soft ocean feel
         const lp = ctx.createBiquadFilter();
         lp.type = 'lowpass';
         lp.frequency.value = 500;
         lp.Q.value = 0.7;
 
-        // Gentle volume modulation for wave rhythm
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.frequency.value = 0.12;
-        lfoGain.gain.value = 0.08;
-        lfo.connect(lfoGain);
-        lfoGain.connect(gain.gain);
-        lfo.start();
-
         source.connect(lp);
-        lp.connect(gain);
+        lp.connect(masterGain);
         source.start();
-
-        return { ctx, gain };
       }
 
       btn.addEventListener('click', function() {
         if (!playing) {
-          if (!audio) {
-            audio = createOceanSound();
-          }
-          audio.gain.gain.cancelScheduledValues(audio.ctx.currentTime);
-          audio.gain.gain.setValueAtTime(audio.gain.gain.value, audio.ctx.currentTime);
-          audio.gain.gain.linearRampToValueAtTime(0.15, audio.ctx.currentTime + 1);
-          if (audio.ctx.state === 'suspended') audio.ctx.resume();
+          if (!ctx) initAudio();
+          if (ctx.state === 'suspended') ctx.resume();
+          masterGain.gain.cancelScheduledValues(ctx.currentTime);
+          masterGain.gain.setValueAtTime(0, ctx.currentTime);
+          masterGain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 1.5);
           icon.textContent = '🔊';
           btn.classList.add('active');
           playing = true;
         } else {
-          audio.gain.gain.cancelScheduledValues(audio.ctx.currentTime);
-          audio.gain.gain.setValueAtTime(audio.gain.gain.value, audio.ctx.currentTime);
-          audio.gain.gain.linearRampToValueAtTime(0, audio.ctx.currentTime + 0.5);
+          masterGain.gain.cancelScheduledValues(ctx.currentTime);
+          masterGain.gain.setValueAtTime(masterGain.gain.value, ctx.currentTime);
+          masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
           icon.textContent = '🔇';
           btn.classList.remove('active');
           playing = false;

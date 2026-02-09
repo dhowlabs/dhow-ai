@@ -84,6 +84,21 @@ main {
   margin: 0 auto;
 }
 
+/* About */
+.about {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.about p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.8;
+}
+
 /* Features */
 .features {
   padding: 72px 0;
@@ -124,6 +139,34 @@ main {
   line-height: 1.7;
 }
 
+/* Contact */
+.contact {
+  padding: 56px 0;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.contact p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.contact a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   margin-top: auto;
@@ -133,10 +176,26 @@ footer {
 
 .footer-bottom {
   background: #1E3A5F;
-  padding: 16px 0;
+  padding: 20px 0 16px;
   text-align: center;
   position: relative;
   z-index: 3;
+}
+
+.footer-links {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  margin: 0 12px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .footer-bottom p {
@@ -192,7 +251,7 @@ footer {
   position: absolute;
   z-index: 4;
   top: 10px;
-  animation: sail 20s ease-in-out infinite, bob 3s ease-in-out infinite;
+  animation: sail 25s linear infinite, bob 3s ease-in-out infinite;
 }
 
 .boat-logo {
@@ -202,16 +261,63 @@ footer {
 }
 
 @keyframes sail {
-  0% { left: -40px; transform: scaleX(1); }
-  48% { left: calc(100% + 40px); transform: scaleX(1); }
-  50% { left: calc(100% + 40px); transform: scaleX(-1); }
-  98% { left: -40px; transform: scaleX(-1); }
-  100% { left: -40px; transform: scaleX(1); }
+  0% { left: -50px; }
+  100% { left: calc(100% + 50px); }
 }
 
 @keyframes bob {
   0%, 100% { margin-top: 0; }
   50% { margin-top: 6px; }
+}
+
+/* Legal Pages */
+.legal {
+  padding: 56px 0 72px;
+}
+
+.legal h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.legal-date {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.legal h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.legal p, .legal li {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.legal ul {
+  padding-left: 24px;
+  margin: 8px 0;
+}
+
+.legal li {
+  margin-bottom: 6px;
+}
+
+.legal a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.legal a:hover {
+  text-decoration: underline;
 }
 
 /* Sound Toggle */
