@@ -17,12 +17,23 @@
   --accent-light: #EEF2FF;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--text-primary);
   background: var(--bg-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 .container {
@@ -36,6 +47,12 @@ body {
   padding: 80px 0 64px;
   text-align: center;
   border-bottom: 1px solid var(--border);
+}
+
+.hero-logo {
+  width: 56px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .hero h1 {
@@ -95,14 +112,92 @@ body {
 
 /* Footer */
 footer {
-  padding: 32px 0;
-  border-top: 1px solid var(--border);
-  text-align: center;
+  margin-top: auto;
+  overflow: hidden;
+  position: relative;
 }
 
-footer p {
+.footer-bottom {
+  background: #1E3A5F;
+  padding: 16px 0;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+
+.footer-bottom p {
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Ocean & Waves */
+.ocean {
+  position: relative;
+  height: 100px;
+  background: linear-gradient(180deg, var(--bg-white) 0%, #d4e6f1 40%, #7fb3d3 100%);
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 60px;
+  background-repeat: repeat-x;
+  background-size: 50% 100%;
+}
+
+.wave-1 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z' fill='%231E3A5F' opacity='0.3'/%3E%3C/svg%3E");
+  animation: wave-drift 8s linear infinite;
+  z-index: 1;
+}
+
+.wave-2 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,80 C150,40 350,100 600,60 C850,20 1050,90 1200,50 L1200,120 L0,120 Z' fill='%231E3A5F' opacity='0.5'/%3E%3C/svg%3E");
+  animation: wave-drift 6s linear infinite reverse;
+  z-index: 2;
+  bottom: -5px;
+}
+
+.wave-3 {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,70 C300,110 500,30 700,70 C900,110 1100,40 1200,70 L1200,120 L0,120 Z' fill='%231E3A5F'/%3E%3C/svg%3E");
+  animation: wave-drift 10s linear infinite;
+  z-index: 3;
+  bottom: -10px;
+}
+
+@keyframes wave-drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Boat */
+.boat {
+  position: absolute;
+  z-index: 4;
+  top: 10px;
+  animation: sail 20s ease-in-out infinite, bob 3s ease-in-out infinite;
+}
+
+.boat-logo {
+  width: 32px;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes sail {
+  0% { left: -40px; transform: scaleX(1); }
+  48% { left: calc(100% + 40px); transform: scaleX(1); }
+  50% { left: calc(100% + 40px); transform: scaleX(-1); }
+  98% { left: -40px; transform: scaleX(-1); }
+  100% { left: -40px; transform: scaleX(1); }
+}
+
+@keyframes bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: 6px; }
 }
 
 /* Responsive */
